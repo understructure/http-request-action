@@ -14,6 +14,7 @@ if (!!core.getInput('customHeaders')) {
 }
 
 const requestContentType = core.getInput('contentType')
+core.debug('requestContentType: ' + requestContentType)
 const headers = { 'Content-Type': requestContentType || 'application/json' }
 
 if (!!core.getInput('username') || !!core.getInput('password')) {

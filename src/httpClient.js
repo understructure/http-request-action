@@ -32,10 +32,11 @@ const request = async({ method, requestContentType, instanceConfig, data, files,
     }
 
     if ((files && files !== '{}') || requestContentType === "application/x-www-form-urlencoded") {
+      core.debug("attempting to convert JSON data to form-urlencoded")
       filesJson = convertToJSON(files)
       dataJson = convertToJSON(data)
 
-      if (Object.keys(filesJson).length > 0) {
+      if (Object.keys(filesJson).length > 0 || requestContentType === "application/x-www-form-urlencoded") {
         try {
           data = convertToFormData(dataJson, filesJson)
           instanceConfig = await updateConfig(instanceConfig, data, actions)
