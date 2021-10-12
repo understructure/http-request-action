@@ -31,12 +31,12 @@ const request = async({ method, requestContentType, instanceConfig, data, files,
       data = undefined;
     }
 
-    if ((files && files !== '{}') || requestContentType === "application/x-www-form-urlencoded") {
+    if (files && files !== '{}') {
       core.debug("attempting to convert JSON data to form-urlencoded")
       filesJson = convertToJSON(files)
       dataJson = convertToJSON(data)
 
-      if (Object.keys(filesJson).length > 0 || requestContentType === "application/x-www-form-urlencoded") {
+      if (Object.keys(filesJson).length > 0) {
         try {
           data = convertToFormData(dataJson, filesJson)
           instanceConfig = await updateConfig(instanceConfig, data, actions)
@@ -44,6 +44,20 @@ const request = async({ method, requestContentType, instanceConfig, data, files,
           actions.setFailed({ message: `Unable to convert Data and Files into FormData: ${error.message}`, data: dataJson, files: filesJson })
           return
         }
+      }
+    }
+
+    if (requestContentType === "application/x-www-form-urlencoded") {
+      try {
+        dataJson = convertToJSON(data);
+        let ary = [];
+        for (const x in dataJson) {
+          ary.push(x + "=" + dataJson[x]);
+        }
+        data = ary.join("&")
+        instanceConfig = await updateConfig(instanceConfig, data, actions)
+      } catch(error) {
+        actions.setFailed({message: `Converting to form-urlencoded data failed: ${error.message}`})
       }
     }
 
