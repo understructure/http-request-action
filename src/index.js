@@ -13,7 +13,8 @@ if (!!core.getInput('customHeaders')) {
   }
 }
 
-const headers = { 'Content-Type': core.getInput('contentType') || 'application/json' }
+const requestContentType = core.getInput('contentType')
+const headers = { 'Content-Type': requestContentType || 'application/json' }
 
 if (!!core.getInput('username') || !!core.getInput('password')) {
   core.debug('Add BasicHTTP Auth config')
@@ -47,4 +48,4 @@ if (typeof ignoreStatusCodes === 'string' && ignoreStatusCodes.length > 0) {
   ignoredCodes = ignoreStatusCodes.split(',').map(statusCode => parseInt(statusCode.trim()))
 }
 
-request({ data, method, instanceConfig, auth, preventFailureOnNoResponse, escapeData, files, ignoredCodes, actions: new GithubActions() })
+request({ data, requestContentType, method, instanceConfig, auth, preventFailureOnNoResponse, escapeData, files, ignoredCodes, actions: new GithubActions() })

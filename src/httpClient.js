@@ -19,7 +19,7 @@ const METHOD_POST = 'POST'
  *
  * @returns {void}
  */
-const request = async({ method, instanceConfig, data, files, auth, actions, ignoredCodes, preventFailureOnNoResponse, escapeData }) => {
+const request = async({ method, requestContentType, instanceConfig, data, files, auth, actions, ignoredCodes, preventFailureOnNoResponse, escapeData }) => {
   try {
     if (escapeData) {
       data = data.replace(/"[^"]*"/g, (match) => { 
@@ -31,7 +31,7 @@ const request = async({ method, instanceConfig, data, files, auth, actions, igno
       data = undefined;
     }
 
-    if (files && files !== '{}') {
+    if ((files && files !== '{}') || requestContentType === "application/x-www-form-urlencoded") {
       filesJson = convertToJSON(files)
       dataJson = convertToJSON(data)
 

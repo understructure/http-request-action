@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fjogeleit/http-request-action.git"
+    "url": "git+https://github.com/understructure/http-request-action.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fjogeleit/http-request-action/issues"
+    "url": "https://github.com/understructure/http-request-action/issues"
   },
-  "homepage": "https://github.com/fjogeleit/http-request-action#readme",
+  "homepage": "https://github.com/understructure/http-request-action#readme",
   "devDependencies": {
     "@actions/core": "^1.2.6"
   },

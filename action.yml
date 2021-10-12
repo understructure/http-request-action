@@ -11,6 +11,7 @@ inputs:
     contentType:
         description: 'Content Type'
         required: false
+        default: 'application/json'
     data:
         description: 'Request Body as JSON String'
         required: false
